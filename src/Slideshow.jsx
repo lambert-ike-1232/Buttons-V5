@@ -3,7 +3,6 @@ import React, { useState, useCallback } from "react";
 import * as R from "ramda";
 import useInterval from "use-interval";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-//import Dropdown from 'react-bootstrap';
 /*
 1.)
 - Make an object of objects keyed by ID
@@ -32,11 +31,19 @@ const makeGetNextId = (newList) =>
     R.nth(R.__, newList),
     R.defaultTo(R.head(newList))
   );
-const defaultState = ["ABC123", "DEF234"];
+const defaultState = ["ABC123", "DEF234", "HIJ345"];
 const dashBoards = {
-  ABC123: { id: "ABC123", name: "DB1", widgets: ["widget A", "widget B"] },
+  ABC123: {
+    id: "ABC123",
+    name: "DB1",
+    widgets: ["widget A", "widget B", "widget H", "widget E"]
+  },
   DEF234: { id: "DEF234", name: "DB2", widgets: ["widget C", "widget D"] },
-  HIJ345: { id: "HIJ345", name: "DB3", widgets: ["widget H", "widget I"] },
+  HIJ345: {
+    id: "HIJ345",
+    name: "DB3",
+    widgets: ["widget H", "widget I", "widget 5"]
+  },
   KLM456: { id: "KLM456", name: "DB4", widgets: ["widget K", "widget L"] },
   QRS567: { id: "QRS567", name: "DB5", widgets: ["widget Q", "widget R"] }
 };
@@ -181,8 +188,12 @@ export const Slideshow = () => {
         </div>
         {/* Widget Area */}
         <div className="box Widgets">
-          Widgets
-          <pre>{JSON.stringify(widgets, null, 2)}</pre>
+          {R.map(
+            (widget) => (
+              <div>{widget}</div>
+            ),
+            widgets
+          )}
         </div>
         {/* Dashboards Area*/}
         <div className="box DBList">
@@ -251,6 +262,17 @@ const Style = styled.section`
   .Widgets {
     grid-column: 2/8;
     grid-row: 3/50;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100px;
+    grid-gap: 4px;
+    > div {
+      outline: 1px solid black;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
   .SS {
     grid-column: 8/30;
